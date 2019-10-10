@@ -466,6 +466,61 @@ nyc_cost =
   html_table(header = TRUE)</code></pre>
 </div>
 </div>
+<div id="css-selectors" class="section level1">
+<h1>CSS SELECTORS</h1>
+<pre class="r"><code>hpsaga_html = 
+  read_html(&quot;https://www.imdb.com/list/ls000630791/&quot;)
+
+title_vec = 
+  hpsaga_html %&gt;%
+  html_nodes(&quot;.lister-item-header a&quot;) %&gt;%
+  html_text()
+
+gross_rev_vec = 
+  hpsaga_html %&gt;%
+  html_nodes(&quot;.text-small:nth-child(7) span:nth-child(5)&quot;) %&gt;%
+  html_text()
+
+runtime_vec = 
+  hpsaga_html %&gt;%
+  html_nodes(&quot;.runtime&quot;) %&gt;%
+  html_text()
+
+hpsaga_df = 
+  tibble(
+    title = title_vec,
+    rev = gross_rev_vec,
+    runtime = runtime_vec)</code></pre>
+<div id="practice-problem-1" class="section level2">
+<h2>Practice Problem</h2>
+<pre class="r"><code>url = &quot;https://www.amazon.com/product-reviews/B00005JNBQ/ref=cm_cr_arp_d_viewopt_rvwer?ie=UTF8&amp;reviewerType=avp_only_reviews&amp;sortBy=recent&amp;pageNumber=1&quot;
+
+dynamite_html = read_html(url)
+
+review_titles = 
+  dynamite_html %&gt;%
+  html_nodes(&quot;.a-text-bold span&quot;) %&gt;%
+  html_text()
+
+review_stars = 
+  dynamite_html %&gt;%
+  html_nodes(&quot;#cm_cr-review_list .review-rating&quot;) %&gt;%
+  html_text()
+
+review_text = 
+  dynamite_html %&gt;%
+  html_nodes(&quot;.review-text-content span&quot;) %&gt;%
+  html_text()
+
+reviews = tibble(
+  title = review_titles,
+  stars = review_stars,
+  text = review_text
+)
+
+# DOESN&#39;T WORK!!!!!!!!!!</code></pre>
+</div>
+</div>
 
 
 
