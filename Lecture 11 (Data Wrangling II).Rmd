@@ -1,0 +1,11 @@
+---
+title: "Lecture 11 (Data Wrangling II)"
+author: "CJ Snyder"
+date: "10/10/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
