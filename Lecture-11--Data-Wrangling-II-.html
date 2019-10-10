@@ -521,6 +521,26 @@ reviews = tibble(
 # DOESN&#39;T WORK!!!!!!!!!!</code></pre>
 </div>
 </div>
+<div id="using-an-api" class="section level1">
+<h1>Using an API</h1>
+<pre class="r"><code># Easy way to download the data
+nyc_water = 
+  GET(&quot;https://data.cityofnewyork.us/resource/waf7-5gvc.csv&quot;) %&gt;% 
+  content(&quot;parsed&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   year = col_double(),
+##   new_york_city_population = col_double(),
+##   nyc_consumption_million_gallons_per_day = col_double(),
+##   per_capita_gallons_per_person_per_day = col_double()
+## )</code></pre>
+<pre class="r"><code># Using a JSON file with API 
+nyc_water_df = 
+  GET(&quot;https://data.cityofnewyork.us/resource/waf7-5gvc.json&quot;) %&gt;% 
+  content(&quot;text&quot;) %&gt;% 
+  jsonlite::fromJSON() %&gt;% 
+  as_tibble()</code></pre>
+</div>
 
 
 
