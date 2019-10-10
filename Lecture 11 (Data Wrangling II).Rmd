@@ -8,4 +8,62 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(rvest)
+library(httr)
 ```
+
+# Loading data from the WEB...NON-SELECTOR-GADGET
+```{r}
+url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm"
+drug_use_xml = read_html(url)
+
+drug_use_xml
+
+```
+
+# Table-tag (if you see tables on a website)
+```{r}
+drug_use_xml %>% 
+  html_nodes(css = "table")
+
+# Pulling out the 15 tables included on the webpage.
+
+table_marj = 
+  (drug_use_xml %>%  html_nodes(css="table")) %>% 
+  .[[1]] %>% 
+  html_table() %>% 
+  slice(-1) %>% 
+  as_tibble()
+
+table_marj
+```
+The double square brackets indicates the # table you want to extract from the "tables" from the website.
+
+
+## Practice Problem
+```{r}
+url = "https://www.bestplaces.net/cost_of_living/city/new_york/new_york"
+cost_of_living_xml = read_html(url)
+
+cost_of_living_xml
+
+cost_of_living_xml %>% 
+    html_nodes(css="table")
+
+cost_of_living = 
+  (cost_of_living_xml %>%  html_nodes(css="table")) %>% 
+  .[[1]] %>% 
+  html_table(header=TRUE)
+
+
+# ALTERNATIVE WAY!!
+nyc_cost = 
+  read_html("https://www.bestplaces.net/cost_of_living/city/new_york/new_york") %>%
+  html_nodes(css = "table") %>%
+  .[[1]] %>%
+  html_table(header = TRUE)
+```
+
+
+
+
